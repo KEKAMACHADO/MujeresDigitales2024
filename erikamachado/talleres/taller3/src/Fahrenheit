@@ -1,0 +1,57 @@
+import React, { useState } from 'react';
+
+const TemperatureConverter = () => {
+  // Estados para la temperatura y la unidad seleccionada
+  const [temperature, setTemperature] = useState(''); // Valor de entrada
+  const [unit, setUnit] = useState('Celsius'); // Unidad seleccionada (Celsius o Fahrenheit)
+
+  // Función para manejar el cambio de unidad
+  const handleUnitChange = (newUnit) => {
+    setUnit(newUnit);
+  };
+
+  // Función para convertir la temperatura
+  const convertTemperature = () => {
+    let temp = parseFloat(temperature);
+    if (isNaN(temp)) return ''; // Si no es un número, retorna vacío
+
+    if (unit === 'Celsius') {
+      // Si la unidad seleccionada es Celsius, convertir a Fahrenheit
+      return ((temp * 9) / 5 + 32).toFixed(2) + ' °F';
+    } else {
+      // Si la unidad seleccionada es Fahrenheit, convertir a Celsius
+      return (((temp - 32) * 5) / 9).toFixed(2) + ' °C';
+    }
+  };
+
+  return (
+    <div>
+      <h1>Convertidor de Temperatura</h1>
+
+      {/* Input para ingresar la temperatura */}
+      <input
+        type="number"
+        value={temperature}
+        onChange={(e) => setTemperature(e.target.value)}
+        placeholder="Ingresa la temperatura"
+      />
+
+      {/* Botones para seleccionar entre Celsius y Fahrenheit */}
+      <div>
+        <button onClick={() => handleUnitChange('Celsius')} disabled={unit === 'Celsius'}>
+          Celsius
+        </button>
+        <button onClick={() => handleUnitChange('Fahrenheit')} disabled={unit === 'Fahrenheit'}>
+          Fahrenheit
+        </button>
+      </div>
+
+      {/* Mostrar la temperatura convertida */}
+      <h2>
+        Temperatura convertida: {convertTemperature()}
+      </h2>
+    </div>
+  );
+};
+
+export default TemperatureConverter;
